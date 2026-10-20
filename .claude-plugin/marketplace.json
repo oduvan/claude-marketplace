@@ -1,0 +1,17 @@
+{
+  "name": "lyabah",
+  "owner": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "metadata": {
+    "description": "Skills for the lyabah projects: the docs that lyabah-service reads from each repository."
+  },
+  "plugins": [
+    {
+      "name": "lyabah-docs",
+      "source": "./plugins/lyabah-docs",
+      "description": "Write and keep up to date docs/db_schema.md and docs/api/*.yaml.md, the two kinds of docs lyabah-service reads."
+    }
+  ]
+}
