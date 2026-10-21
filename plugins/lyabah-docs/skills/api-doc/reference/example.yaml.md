@@ -43,15 +43,14 @@ actions:
     query:
       lang:
         $param: lang
+      draft:
+        $param: draft
     body:
       title:
         $param: title
       html:
         $param: html
       source: agent
-    draft:
-      query:
-        dry_run: "1"
   get:
     method: GET
     query:
@@ -62,6 +61,9 @@ actions:
     required:
       - slug
       - published
+    query:
+      draft:
+        $param: draft
     body:
       published:
         $param: published
@@ -73,9 +75,11 @@ A post has a title and an HTML body in English and in Ukrainian. Replacing
 the text of one language leaves the other as it is. The old text is kept in
 the post's history, so the owner can bring it back on the site's admin page.
 
-`replace` has a draft mode: with `dry_run=1` the site checks the
-call (the post exists, the HTML is allowed) and changes nothing. Preparing a
-call runs it. `get` changes nothing, so it can be called at once.
+`replace` and `publish` need the owner's approval. Before they wait for it,
+lyabah-service sends them with `draft=1`: the site then checks everything
+(the post exists, the HTML is allowed), answers exactly as it would, and
+changes nothing, so the reviewer sees the outcome first. `get` changes
+nothing, so it can be called at once.
 
 ## Turning a request into parameters
 

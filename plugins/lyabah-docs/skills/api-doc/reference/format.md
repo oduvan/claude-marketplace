@@ -30,7 +30,6 @@ An article has either one call at the top level, its fields next to
 | `headers` | no | Extra headers, as an object. A value is one line. |
 | `body` | no | Any JSON. An object or a list is sent as JSON; a string is sent as text. |
 | `content_type` | no | `application/json` by default (`text/plain` for a string body). `application/x-www-form-urlencoded` sends an object body as a form. With any other type, a string body is sent as it is and an object or list as JSON, under that type. |
-| `draft` | no | How to send the same call so that the API only checks it. See below. |
 | `approve_required` | no | `true` by default, `false` by default for `GET`. |
 
 An unknown field is an error, so a misspelt one does not pass unnoticed.
@@ -69,7 +68,7 @@ to the article.
 
 ## Parameters in values
 
-In `path`, `query`, `headers`, `body` and everything under `draft`:
+In `path`, `query`, `headers` and `body`:
 
 - `{$param: name}` as a whole value becomes the parameter's value with its
   type: a number stays a number, a list a list, an object an object. It holds
@@ -102,15 +101,20 @@ Only lyabah-service knows what they mean: check an article with it.
 
 ## draft
 
-`draft` changes the call so that the API only checks it:
+`draft` is built in: every article has it, without declaring it in `params`.
 
-- `method` and `path`: another method or path.
-- `query` and `headers`: added to the call's.
-- `body`: fields merged into the call's body, which must then be an object.
-
-A `draft` that changes nothing is an error. The service sends the draft while
-the call is prepared, before anyone reviews it, and keeps the call only if the
-draft answers with a 2xx status. `call_api` does not run drafts.
+- It is `1` when lyabah-service checks a call and `0` when it sends it. A
+  caller that passes `draft` is refused.
+- Send it with `{$param: draft}` (or `{$draft}` inside a string) where the
+  endpoint takes its check-only flag, e.g. `query: {draft: {$param: draft}}`.
+- **An action with `approve_required: true` must send it**, or the article is
+  refused. Before such a call joins its group, the service sends it with
+  `draft=1` and keeps it only on a 2xx answer.
+- An action that needs no approval may leave it out; `call_api` sends `0`
+  when it uses it.
+- Declaring `draft` in `params`, or listing it in `required`, is an error.
+- The old `draft:` field (another method, path or extra fields) is gone, and
+  is refused with a message.
 
 ## Where the API lives
 

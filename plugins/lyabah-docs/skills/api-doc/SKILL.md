@@ -54,7 +54,8 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
 4. **Leave authentication out.** The lyabah-service registry sets the
    `Authorization` header and the base URL. The file never names a secret.
 5. **Set `approve_required`** with the rule below.
-6. **Decide on `draft`** with the rule below.
+6. **Send `draft`** in every action that needs approval, with the rule below,
+   and give the endpoint a draft mode if it has none.
 7. **List what it writes** in `writes`, with the rule below.
 8. **Write the `summary` and the Markdown** in the shape below.
 9. **Check** with the list at the end.
@@ -72,15 +73,28 @@ The default is `true`, and `false` for `GET`. Set it on each action, never in
 
 ## The draft rule
 
-Add `draft` only if the same endpoint has a mode that checks the call and
-changes nothing (e.g. a `dry_run=1` query parameter), **and** that mode
-accepts exactly the same input. Draft calls are sent to the real API while
-the call is prepared, before anyone reviews it, and a call whose draft fails
-is not kept.
+`draft` is a parameter every article has without declaring it: `1` when
+lyabah-service checks a call, `0` when it sends it. The agent never passes
+it. **Every action that needs approval must send it**, because such a call is
+first sent with `draft=1`, kept only if that answers 2xx, and shown to the
+reviewer with that answer. Put it where the endpoint takes its check-only
+flag:
 
-A different endpoint that looks like a preview is not a draft when it decodes
-a different type: if it refuses unknown fields, every full call would fail its
-draft. Make it an action of its own instead, often with
+```yaml
+query:
+  draft:
+    $param: draft
+```
+
+With `draft=1` the endpoint must do everything the real call does (checks,
+page reads, database writes) and answer exactly as it would, but apply
+nothing. When it does not do that yet, add it to the endpoint in the same
+change: run the work in a transaction and roll it back on `draft=1`, set
+`X-Draft: 1` on the answer, and refuse any value but `0` and `1` with a
+`400`. `0`, or no `draft`, applies the call.
+
+A different endpoint that only previews (it takes other input, or refuses
+unknown fields) is not a draft. Make it an action of its own, often with
 `approve_required: false`.
 
 ## The writes rule
@@ -144,7 +158,9 @@ watching one").
   is used by some call.
 - Every placeholder is `{$param: name}` or `{$name}`; no `{{name}}` is left.
 - Every path parameter is in that call's `required`, or has a default.
-- `approve_required`, `draft` and `writes` follow their rules.
+- `approve_required`, `draft` and `writes` follow their rules; every action
+  that needs approval sends `{$param: draft}`, and its endpoint answers
+  `draft=1` without applying anything.
 - No `Authorization`, `Cookie` or `Content-Type` header (the body's type is
   `content_type`).
 - The Markdown has its parts, its JSON matches what the handlers write, and
