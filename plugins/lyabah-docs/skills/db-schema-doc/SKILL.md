@@ -1,6 +1,6 @@
 ---
 name: db-schema-doc
-description: Use when writing, reviewing or updating a repository's docs/db_schema.md, or when a change adds or edits a database migration in a repository whose database lyabah-service's SQL tools read (query_database, describe_database).
+description: Use when writing, reviewing or updating a repository's docs/db_schema.md, or when a change adds, renames or drops a table or column (a database migration) in a repository whose database lyabah-service's SQL tools read (query_database, describe_database).
 ---
 
 # Writing docs/db_schema.md
@@ -26,14 +26,18 @@ Write the doc in exactly these parts, in this order:
    to many tables: empty text stored as `''` instead of NULL, time zones and
    units, soft deletes or expiry that every query must filter on, very large
    columns not to select with `*`, links between tables that are not foreign
-   keys, columns that hold secrets or hashes.
+   keys, columns that hold secrets or hashes. End with how data is
+   changed: through the repository's API calls, never SQL, found with
+   `find_api_endpoints` by the column or table (`<database>.<table>.<column>`);
+   `describe_database` on a table lists them too. When the repository has no
+   `docs/api/` yet, say that its data cannot be changed through lyabah-service.
 3. **One `##` section per topic** (e.g. "Articles", "Readers"). In it, one
    paragraph per table: start with **`table_name`**, then say what one row is.
    Then a bullet only for each column whose meaning is not obvious from its
    name: allowed values and what each means, status flows, how a value is
-   derived, what NULL or `''` means here, when it changes. A table whose
-   columns all mean what their names say gets its one sentence and nothing
-   more.
+   derived, what NULL or `''` means here, when it changes, and the API's
+   name for it when that differs from the column's. A table whose columns all
+   mean what their names say gets its one sentence and nothing more.
 4. **`## Useful questions`.** Two to five example queries in one `sql` block,
    each with a `--` comment saying the question it answers. Run each one
    before you keep it: with `query_database` if the MCP tools are connected,
@@ -64,11 +68,18 @@ Keep the doc short: a few lines per table. A 20-table database fits in about
 Update the doc in the same commit as the migration: the paragraph of each
 table the migration adds, changes or drops. A dropped table leaves the doc.
 
+In the same commit, fix the `writes` lists in `docs/api/*.yaml.md` that name
+what the migration renames or drops (search them for `<database>.<table>`),
+and add the new columns to the `writes` of the endpoints that set them. Use
+the `api-doc` skill for those files. Run every example query again on the new
+schema.
+
 ## Check before you finish
 
 - Every table that exists and is used is described; none that is dropped.
 - No column is listed only to give its type or its nullability.
 - No migration number or date is quoted as "the doc's version": git keeps that.
 - Every example query ran.
+- No `docs/api/*.yaml.md` `writes` names a table or column that is gone.
 
 A good example of the shape: `reference/example.md`.

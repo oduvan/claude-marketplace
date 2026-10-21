@@ -35,6 +35,15 @@ body:
   published: "{{publish}}"
 draft:
   query: {dry_run: "1"}
+writes:
+  updates:
+    - lyabah_shop.posts.title_en
+    - lyabah_shop.posts.title_uk
+    - lyabah_shop.posts.html_en
+    - lyabah_shop.posts.html_uk
+    - lyabah_shop.posts.published
+    - lyabah_shop.posts.updated_at
+  creates: [lyabah_shop.post_history]
 ---
 
 # Replace a post's text
@@ -64,10 +73,21 @@ exists, the HTML is allowed) and changes nothing. Preparing a call runs it.
 {"slug": "spring-sale", "lang": "en", "title": "Spring sale", "published": true, "updated_at": "2026-10-20T10:00:00Z"}
 ```
 
-Check that `title` is the one you sent.
+- `title` is the title now. If it is the one you sent, the call worked: tell
+  the person the post's new title.
+- `published`: `true` means readers see the post now, `false` that it is
+  hidden. Mention it when the request was to publish or hide it, or when it
+  is not what they would expect.
+- `updated_at` is when this change was saved, in UTC. Give it in the
+  person's time if you mention it.
+
+Other answers:
 
 - `400`: the HTML has a tag the site does not allow; the message names it.
-  Remove it and prepare the call again.
-- `404`: no post has that slug. List posts with `GET /api/posts`.
-- `409`: someone changed the post after you read it. Read it again and redo
-  the change.
+  Tell the person which tag was refused, remove it and prepare the call again.
+- `404`: no post has that slug. It may be misspelt, or deleted. Say so, and
+  list the posts with `GET /api/posts` to find the right one.
+- `409`: someone changed the post after you read it, so nothing was saved.
+  Read it again, redo the change and prepare a new call.
+- `401` or `500`: a problem on the site's side, not in the request. Tell the
+  owner; do not retry in a loop.

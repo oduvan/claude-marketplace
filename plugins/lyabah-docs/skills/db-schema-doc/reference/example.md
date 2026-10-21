@@ -14,6 +14,9 @@ the data means.
   pointing at deleted products.
 - **Empty text is `''`**, not NULL, except where a column says otherwise.
 - `customers.password_hash` is a secret: never select it.
+- **Changing data** goes through the shop's API, never SQL:
+  `find_api_endpoints` with the column, e.g. `lyabah_shop.orders.status`,
+  finds the call to prepare.
 
 ## Products
 

@@ -21,6 +21,7 @@ An unknown field is an error, so a misspelt one does not pass unnoticed.
 | `body` | no | An object or a list is sent as JSON; a string is sent as text. |
 | `content_type` | no | `application/json` by default (`text/plain` for a string body). `application/x-www-form-urlencoded` sends an object body as a form. With any other type, a string body is sent as it is and an object or list as JSON, under that type. |
 | `draft` | no | How to send the same call so that the API only checks it. |
+| `writes` | no | What the call changes in the databases. See below. |
 
 ## params
 
@@ -77,6 +78,26 @@ An unknown field is an error, so a misspelt one does not pass unnoticed.
 A `draft` that changes nothing is an error. The service sends the draft while
 the call is prepared, before anyone reviews it, and keeps the call only if the
 draft answers with a 2xx status.
+
+## writes
+
+```yaml
+writes:
+  updates: [database.table.column, …]
+  creates: [database.table, …]
+  deletes: [database.table, …]
+```
+
+- Every name is lowercase letters, digits and `_`, joined by dots: three
+  parts under `updates`, two under `creates` and `deletes`.
+- A name listed twice in one list is an error. Any list may be left out.
+- `writes: {}` says the call changes no database. A description without
+  `writes` does not say, and `find_api_endpoints` lists it as a problem unless
+  its method is `GET`.
+- A database in `writes` must be one the lyabah-service registry lists for
+  the same repository, or `find_api_endpoints` lists it as a problem.
+- `describe_database` flags a column under `updates` that its table does not
+  have.
 
 ## Where the API lives
 
