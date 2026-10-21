@@ -1,6 +1,6 @@
 {
   "name": "lyabah-docs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Write and keep up to date docs/db_schema.md and docs/api/*.yaml.md, the two kinds of docs lyabah-service reads.",
   "author": {
     "name": "Alexander Lyabah",

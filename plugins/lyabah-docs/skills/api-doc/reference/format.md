@@ -1,27 +1,52 @@
 # The front matter of docs/api/<name>.yaml.md
 
 These are the rules lyabah-service's parser enforces. A file that breaks one is
-refused when an agent prepares a call, with a message that names the problem.
+refused when an agent calls it, and `find_api_endpoints` lists it under
+`problems`, with the message naming what is wrong.
 
 The file must start with a `---` line, then the YAML, then another `---` line
 (`...` also closes it). Everything after is the Markdown.
 
-## Fields
+## The article's fields
 
-An unknown field is an error, so a misspelt one does not pass unnoticed.
+| Field | Meaning |
+|---|---|
+| `summary` | One line. When left out, the first paragraph of the Markdown is used. |
+| `writes` | A list of `database.table.field`, in lowercase letters, digits and `_`. None listed twice. |
+| `params` | One JSON Schema per parameter. Every parameter must be used by some call. |
+| `actions` | The calls by name, when there is more than one. |
+
+An article has either one call at the top level, its fields next to
+`params`, or `actions`. A file with both is refused.
+
+## A call's fields
 
 | Field | Required | Meaning |
 |---|---|---|
 | `method` | yes | `GET`, `POST`, `PUT`, `PATCH` or `DELETE`. |
-| `path` | yes | Starts with one `/`, goes after the API's base URL, and has no `?` or `#`: query parameters go under `query`. `{{name}}` (or `{name}`, as OpenAPI writes it) fills a path segment. |
-| `summary` | no | One line. When left out, the first paragraph of the Markdown is used. |
-| `params` | no | One JSON Schema per parameter. Parameters not declared here are refused. |
-| `query` | no | The query string, as a map. A list value repeats the key. |
-| `headers` | no | Extra headers, as a map. A value is one line. |
-| `body` | no | An object or a list is sent as JSON; a string is sent as text. |
+| `path` | yes | Starts with one `/`, goes after the API's base URL, and has no `?` or `#`: query parameters go under `query`. `{$name}` fills a path segment. |
+| `required` | no | The parameters the call needs. Each must be one it uses. |
+| `query` | no | The query string, as an object. A list value repeats the key. |
+| `headers` | no | Extra headers, as an object. A value is one line. |
+| `body` | no | Any JSON. An object or a list is sent as JSON; a string is sent as text. |
 | `content_type` | no | `application/json` by default (`text/plain` for a string body). `application/x-www-form-urlencoded` sends an object body as a form. With any other type, a string body is sent as it is and an object or list as JSON, under that type. |
-| `draft` | no | How to send the same call so that the API only checks it. |
-| `writes` | no | What the call changes in the databases. See below. |
+| `draft` | no | How to send the same call so that the API only checks it. See below. |
+| `approve_required` | no | `true` by default, `false` by default for `GET`. |
+
+An unknown field is an error, so a misspelt one does not pass unnoticed.
+`summary`, `writes` and `params` inside an action are errors too: they belong
+to the article.
+
+## actions
+
+- Names are lowercase letters, digits and `_`. `default` must be there.
+- `base` holds what the other actions share. It is never called, and it may
+  not set `approve_required`.
+- Each other action starts from `base`: a field replaces `base`'s; `query`,
+  `headers` and an object `body` are merged into `base`'s key by key, all the
+  way down; `null` removes a field or a key.
+- An action accepts only the parameters it uses. A call that passes another
+  one is refused with the list of those it takes.
 
 ## params
 
@@ -30,8 +55,8 @@ An unknown field is an error, so a misspelt one does not pass unnoticed.
   `maxLength`, `minimum`, `maximum`, `items`, `default`, `description`…
 - `type` is one of `string`, `number`, `integer`, `boolean`, `array`,
   `object`, `null`. A misspelt type is an error.
-- `required: true` marks a parameter that must be given. It is not part of
-  JSON Schema; the service reads it and removes it.
+- `required: true` is an error here: list the parameter in the call's
+  `required`.
 - `pattern` is Go's RE2 syntax (no lookahead or backreferences) and is not
   anchored: write `^…$` to match the whole value.
 - `minLength` and `maxLength` count characters, not bytes. When the server
@@ -40,22 +65,28 @@ An unknown field is an error, so a misspelt one does not pass unnoticed.
 - A `default` must itself match the schema.
 - Numbers of 2^53 or more cannot be sent exactly: make such ids strings.
 
-## Templates
+## Parameters in values
 
-`path`, `query`, `headers`, `body` and everything under `draft` are templates.
+In `path`, `query`, `headers`, `body` and everything under `draft`:
 
-- `"{{name}}"` as a whole value becomes the parameter's value with its type:
-  a boolean stays a boolean, an object stays an object.
-- Inside other text (`"/posts/{{slug}}/view"`, `"lang-{{lang}}"`), the value
-  is written out, and an object or list as JSON.
-- A key whose template names a parameter that was not given, and that has no
-  default, is left out of the call. That is how optional fields work. An
-  empty string, `0` or `false` counts as given and is sent, so an API that
-  clears a field on `""` can be told to.
-- Every parameter a template names must be declared in `params`.
-- A path parameter must be `required: true` or have a `default`.
-- **Quote every template.** YAML reads a bare `{{name}}` as a map, and the
-  file is refused.
+- `{$param: name}` as a whole value becomes the parameter's value with its
+  type: a number stays a number, a list a list, an object an object. It holds
+  only the name; any other key next to `$param` is an error.
+- Inside a string, `{$name}` writes the value out (`"Watching {$name}"`), and
+  an object or list as JSON.
+- `{{$name}}` inside a string is the plain text `{$name}`.
+- `{$literal: value}` sends `value` exactly as written, even if it looks like
+  a marker.
+- A key or list item whose parameter was not given, and that has no default,
+  is left out. An empty string, `0` or `false` counts as given and is sent.
+- Every other value is sent as written: `{{x}}`, `$x` and `{x}` in a string
+  included.
+- `{{name}}` or a path's `{name}` naming a declared parameter is refused as
+  the old form, with the new one in the message.
+- Every parameter a value names must be declared in `params`.
+
+These markers are plain YAML, so every YAML library reads them the same way.
+Only lyabah-service knows what they mean: check an article with it.
 
 ## Headers
 
@@ -77,31 +108,12 @@ An unknown field is an error, so a misspelt one does not pass unnoticed.
 
 A `draft` that changes nothing is an error. The service sends the draft while
 the call is prepared, before anyone reviews it, and keeps the call only if the
-draft answers with a 2xx status.
-
-## writes
-
-```yaml
-writes:
-  updates: [database.table.column, …]
-  creates: [database.table, …]
-  deletes: [database.table, …]
-```
-
-- Every name is lowercase letters, digits and `_`, joined by dots: three
-  parts under `updates`, two under `creates` and `deletes`.
-- A name listed twice in one list is an error. Any list may be left out.
-- `writes: {}` says the call changes no database. A description without
-  `writes` does not say, and `find_api_endpoints` lists it as a problem unless
-  its method is `GET`.
-- A database in `writes` must be one the lyabah-service registry lists for
-  the same repository, or `find_api_endpoints` lists it as a problem.
-- `describe_database` flags a column under `updates` that its table does not
-  have.
+draft answers with a 2xx status. `call_api` does not run drafts.
 
 ## Where the API lives
 
 The base URL and the credentials come from lyabah-service's
 `internal/registry/registry.yaml`, never from the API's own repository. A
-repository whose API agents should call needs an `api:` entry there; tell the
-user if it is missing.
+repository whose API agents should call needs an `api:` entry there, and a
+database named in `writes` must be one the registry lists for that
+repository; tell the user if either is missing.

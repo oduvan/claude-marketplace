@@ -70,8 +70,8 @@ table the migration adds, changes or drops. A dropped table leaves the doc.
 
 In the same commit, fix the `writes` lists in `docs/api/*.yaml.md` that name
 what the migration renames or drops (search them for `<database>.<table>`),
-and add the new columns to the `writes` of the endpoints that set them. Use
-the `api-doc` skill for those files. Run every example query again on the new
+and add the new columns to the `writes` of the articles whose calls set
+them. Use the `api-doc` skill for those files. Run every example query again on the new
 schema.
 
 ## Check before you finish
