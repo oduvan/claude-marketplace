@@ -112,10 +112,15 @@ watching one").
 2. Only when an action's name does not say enough (a side effect, an order to
    call them in), a line about that action. Names like `update` or `delete`
    need none.
-3. `## Turning a request into parameters`: bullets that map typical requests
+3. **Links to other docs** are relative paths from the article's own folder:
+   another article is `[wiki-page](wiki-page.yaml.md)`, the schema doc is
+   `[db_schema.md](../db_schema.md)`. The agent opens them with `read_doc` in
+   the same repository, so link the doc that explains something instead of
+   repeating it. Never link a doc by a github.com address alone.
+4. `## Turning a request into parameters`: bullets that map typical requests
    ("follow this blog") to an action and its parameter values, and say what
    the article cannot do and where to go instead.
-4. `## Reading the answer`: how to treat each response and explain it to the
+5. `## Reading the answer`: how to treat each response and explain it to the
    person who asked. The agent passes this on to them, and records it with
    `interpret_api_result`, so write it for that:
    - The success status of each action, and a short JSON example of the body,
