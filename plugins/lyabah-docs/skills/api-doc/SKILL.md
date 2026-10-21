@@ -30,10 +30,12 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
 
 - Several endpoints on the same subject that share parameters and
   explanation (create, update, delete a resource) go in **one article**,
-  under `actions`. Shared parts go in `actions.base`; `default` is the action
-  a call gets when it names none.
+  under `actions`. Shared parts go in `actions.base`. Every action has a name
+  that says what it does (`read`, `update`, `delete`): there is no default
+  action, and a call to the article must name the one it uses.
 - A lone endpoint keeps its own **simple article**: its `method`, `path` and
-  the rest sit at the top, next to `params`.
+  the rest sit at the top, next to `params`, and a call to it names no
+  action.
 
 ## How to write it
 

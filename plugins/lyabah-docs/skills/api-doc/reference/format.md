@@ -39,7 +39,9 @@ to the article.
 
 ## actions
 
-- Names are lowercase letters, digits and `_`. `default` must be there.
+- Names are lowercase letters, digits and `_`. There is no default action:
+  a call to the article names the action it uses, and an action called
+  `default` is refused.
 - `base` holds what the other actions share. It is never called, and it may
   not set `approve_required`.
 - Each other action starts from `base`: a field replaces `base`'s; `query`,

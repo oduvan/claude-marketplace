@@ -34,7 +34,7 @@ actions:
     path: /api/posts/{$slug}
     required:
       - slug
-  default:
+  replace:
     method: PUT
     required:
       - slug
@@ -73,23 +73,23 @@ A post has a title and an HTML body in English and in Ukrainian. Replacing
 the text of one language leaves the other as it is. The old text is kept in
 the post's history, so the owner can bring it back on the site's admin page.
 
-The default action has a draft mode: with `dry_run=1` the site checks the
+`replace` has a draft mode: with `dry_run=1` the site checks the
 call (the post exists, the HTML is allowed) and changes nothing. Preparing a
 call runs it. `get` changes nothing, so it can be called at once.
 
 ## Turning a request into parameters
 
 - "Fix the typo in the spring sale post": `get` it first (`slug:
-  spring-sale`), fix the text, then the default action with the whole title
+  spring-sale`), fix the text, then `replace` with the whole title
   and HTML: it replaces, it does not patch.
-- "Translate it into Ukrainian": the default action with `lang: uk` and the
+- "Translate it into Ukrainian": `replace` with `lang: uk` and the
   Ukrainian title and HTML.
 - "Hide the spring sale post": `publish` with `published: false`.
 - A new post is not made here: use the `posts/create` article.
 
 ## Reading the answer
 
-The default action and `publish` answer `200` with the post as it is now;
+`replace` and `publish` answer `200` with the post as it is now;
 `get` answers the same for the language asked:
 
 ```json
