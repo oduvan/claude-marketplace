@@ -14,6 +14,15 @@ is written changes. The examples are `reference/go.md` (net/http, pgx) and
 `reference/python.md` (FastAPI, psycopg). For another stack, port one of
 them, and keep every rule below.
 
+## Which endpoints lyabah-service calls
+
+lyabah-service calls an endpoint to **change** data, or to do work the
+database cannot: fetch a page live, preview, render, compute. It never calls
+one just to read rows: agents read data with SQL (`query_database`, guided by
+`docs/db_schema.md`). So do not build a list or get endpoint for
+lyabah-service. The service's own pages may still have one, but its article
+leaves it out (see the `api-doc` skill).
+
 ## The contract
 
 **The key**
