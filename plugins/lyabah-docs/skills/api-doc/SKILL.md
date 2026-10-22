@@ -56,6 +56,9 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
 5. **Set `approve_required`** with the rule below.
 6. **Send `draft`** in every action that needs approval, with the rule below,
    and give the endpoint a draft mode and a checksum if it has none.
+   REQUIRED: building or changing the endpoint itself (the key check,
+   `/api/ping`, the draft, the checksum, its tests) follows the
+   `api-endpoint` skill.
 7. **List what it writes** in `writes`, with the rule below.
 8. **Write the `summary` and the Markdown** in the shape below.
 9. **Check** with the list at the end.
