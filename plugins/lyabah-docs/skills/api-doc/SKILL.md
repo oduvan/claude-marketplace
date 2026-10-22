@@ -67,9 +67,10 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
 
 **An article is for calls that do something the database cannot.** Agents
 read data with SQL: the `query_database` MCP tool, guided by the
-repository's `docs/db_schema.md`. So an action that only returns rows the
-database already holds (a list, a get by id, a count) is not added. The
-question it would answer goes into `docs/db_schema.md` as a query instead
+repository's schema docs (`docs/db_schema.md`, the map, and its articles in
+`docs/db_schema/`). So an action that only returns rows the database already
+holds (a list, a get by id, a count) is not added. The question it would
+answer goes into the topic's article in `docs/db_schema/` as a query instead
 (the `db-schema-doc` skill, "Useful questions"). The same holds for data
 another MCP tool already reads, such as lyabah-service's wiki (`read_wiki`,
 `list_wiki`).
@@ -177,8 +178,10 @@ watching one").
    call them in), a line about that action. Names like `update` or `delete`
    need none.
 3. **Links to other docs** are relative paths from the article's own folder:
-   another article is `[wiki-page](wiki-page.yaml.md)`, the schema doc is
-   `[db_schema.md](../db_schema.md)`. The agent opens them with `read_doc` in
+   another article is `[wiki-page](wiki-page.yaml.md)`, the schema map is
+   `[db_schema.md](../db_schema.md)`, and a schema article is
+   `[orders](../db_schema/orders.md)`: link the article, which has the
+   queries. The agent opens them with `read_doc` in
    the same repository, so link the doc that explains something instead of
    repeating it. Never link a doc by a github.com address alone.
 4. `## Turning a request into parameters`: bullets that map typical requests
