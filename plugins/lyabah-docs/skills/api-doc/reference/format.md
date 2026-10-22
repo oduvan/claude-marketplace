@@ -31,6 +31,8 @@ An article has either one call at the top level, its fields next to
 | `body` | no | Any JSON. An object or a list is sent as JSON; a string is sent as text. |
 | `content_type` | no | `application/json` by default (`text/plain` for a string body). `application/x-www-form-urlencoded` sends an object body as a form. With any other type, a string body is sent as it is and an object or list as JSON, under that type. |
 | `approve_required` | no | `true` by default, `false` by default for `GET`. |
+| `checksum_header` | no | The header that carries the draft's checksum, both ways. `X-Draft-Checksum` by default. Ignored on actions that need no approval, so `base` may set it. |
+| `verify_ttl` | no | Minutes a checked call stays valid, 1 to 10080; the service's default (30) when left out. Only on actions that need approval, never in `base`. |
 
 An unknown field is an error, so a misspelt one does not pass unnoticed.
 `summary`, `writes` and `params` inside an action are errors too: they belong
@@ -42,7 +44,7 @@ to the article.
   a call to the article names the action it uses, and an action called
   `default` is refused.
 - `base` holds what the other actions share. It is never called, and it may
-  not set `approve_required`.
+  not set `approve_required` or `verify_ttl`.
 - Each other action starts from `base`: a field replaces `base`'s; `query`,
   `headers` and an object `body` are merged into `base`'s key by key, all the
   way down; `null` removes a field or a key.
@@ -115,6 +117,19 @@ Only lyabah-service knows what they mean: check an article with it.
 - Declaring `draft` in `params`, or listing it in `required`, is an error.
 - The old `draft:` field (another method, path or extra fields) is gone, and
   is refused with a message.
+
+## The checksum
+
+- The draft of an action that needs approval answers with a checksum in
+  `X-Draft-Checksum` (or `checksum_header`): at most 512 printable ASCII
+  characters. Without one, the draft fails and the call is not added.
+- The draft is sent without the header. The real call sends the stored
+  checksum in it, and the endpoint answers `412` and applies nothing when it
+  no longer matches.
+- Approve runs every chosen call's draft again and approves none when a
+  checksum is not the one the reviewer saw. A check older than `verify_ttl`
+  minutes is shown as expired; the call is not sent once it has expired.
+- The action's own `headers` may not set the checksum header.
 
 ## Where the API lives
 

@@ -78,8 +78,10 @@ the post's history, so the owner can bring it back on the site's admin page.
 `replace` and `publish` need the owner's approval. Before they wait for it,
 lyabah-service sends them with `draft=1`: the site then checks everything
 (the post exists, the HTML is allowed), answers exactly as it would, and
-changes nothing, so the reviewer sees the outcome first. `get` changes
-nothing, so it can be called at once.
+changes nothing, so the reviewer sees the outcome first. The draft answer
+carries `X-Draft-Checksum`, a checksum of the post's current revision; the
+approved call sends it back, and the site changes nothing when the post was
+edited in between. `get` changes nothing, so it can be called at once.
 
 ## Turning a request into parameters
 
@@ -115,5 +117,8 @@ Other answers:
 - `404`: no post has that slug. It may be misspelt, or deleted. Say so.
 - `409`: someone changed the post after you read it, so nothing was saved.
   `get` it again, redo the change and prepare a new call.
+- `412`: the post was edited after the owner approved the call (its checksum
+  no longer matches), so nothing was saved. The call went back to the owner
+  for another review; say so.
 - `401` or `500`: a problem on the site's side, not in the request. Tell the
   owner; do not retry in a loop.

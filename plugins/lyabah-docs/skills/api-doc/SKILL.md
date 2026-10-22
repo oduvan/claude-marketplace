@@ -55,7 +55,7 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
    `Authorization` header and the base URL. The file never names a secret.
 5. **Set `approve_required`** with the rule below.
 6. **Send `draft`** in every action that needs approval, with the rule below,
-   and give the endpoint a draft mode if it has none.
+   and give the endpoint a draft mode and a checksum if it has none.
 7. **List what it writes** in `writes`, with the rule below.
 8. **Write the `summary` and the Markdown** in the shape below.
 9. **Check** with the list at the end.
@@ -96,6 +96,29 @@ change: run the work in a transaction and roll it back on `draft=1`, set
 A different endpoint that only previews (it takes other input, or refuses
 unknown fields) is not a draft. Make it an action of its own, often with
 `approve_required: false`.
+
+## The checksum rule
+
+**The draft of an action that needs approval answers with a checksum** of
+what the change depends on, in the `X-Draft-Checksum` header. A draft
+without one fails, and the call cannot be approved. lyabah-service keeps the
+checksum and sends it back in the same header with the approved call
+(`draft=0`). Before it applies anything, the endpoint works the checksum out
+again, in the same transaction: when it differs, it answers `412` and applies
+nothing. A call without the header is not checked.
+
+- Hash the state the change depends on: the row it updates or deletes, or
+  the fact that the row it creates is not there yet. Leave out what changes
+  on its own (a counter, a time, a result a job refreshes), or every call
+  will look changed.
+- When the endpoint does not do this yet, add it in the same change, with a
+  test for a stale checksum.
+- `checksum_header` names another header for both ways. It is rarely needed.
+- `verify_ttl` is how many minutes a check stays valid before the reviewer
+  must run the draft again (the service's default is 30). Set it on an
+  action that needs approval when its state changes fast; never in `base`.
+- Explain the `412` in the Markdown: the call went back to the owner for
+  another review.
 
 ## The writes rule
 
@@ -158,9 +181,10 @@ watching one").
   is used by some call.
 - Every placeholder is `{$param: name}` or `{$name}`; no `{{name}}` is left.
 - Every path parameter is in that call's `required`, or has a default.
-- `approve_required`, `draft` and `writes` follow their rules; every action
-  that needs approval sends `{$param: draft}`, and its endpoint answers
-  `draft=1` without applying anything.
+- `approve_required`, `draft`, the checksum and `writes` follow their rules;
+  every action that needs approval sends `{$param: draft}`, and its endpoint
+  answers `draft=1` without applying anything, with `X-Draft-Checksum`, and
+  answers `412` to a stale checksum.
 - No `Authorization`, `Cookie` or `Content-Type` header (the body's type is
   `content_type`).
 - The Markdown has its parts, its JSON matches what the handlers write, and
@@ -172,8 +196,9 @@ watching one").
     do not name it;
   - an action with `approve_required: false`: `call_api` it once with real
     parameters and check the answer against the Markdown;
-  - every other action: prepare one call in a group named `doc-check-<name>`,
-    read back the request it built (`get_api_group`), then `discard_api_call`
-    it.
+  - every other action: prepare one call in a group named `doc-check-<name>`
+    (a draft without a checksum is refused here), read back the request and
+    checksum it got (`get_api_group`), then `discard_api_call` it. Only
+    actions that need approval can be prepared.
 
 A full example: `reference/example.yaml.md`.
