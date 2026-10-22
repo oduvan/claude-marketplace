@@ -39,7 +39,12 @@ Write the doc in exactly these parts, in this order:
    name for it when that differs from the column's. A table whose columns all
    mean what their names say gets its one sentence and nothing more.
 4. **`## Useful questions`.** Two to five example queries in one `sql` block,
-   each with a `--` comment saying the question it answers. Run each one
+   each with a `--` comment saying the question it answers. Agents read data
+   only this way: no API article has an action that just returns rows (see
+   the `api-doc` skill, "Which calls get an action"). So when the API has a
+   plain read, such as a list or a get by id, give the query that answers
+   the same question, with the columns that read returned. Mark the long
+   columns, which should be selected only when needed. Run each one
    before you keep it: with `query_database` if the MCP tools are connected,
    otherwise against a throwaway Postgres built from the repository's
    migrations.

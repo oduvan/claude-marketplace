@@ -63,14 +63,36 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
 8. **Write the `summary` and the Markdown** in the shape below.
 9. **Check** with the list at the end.
 
+## Which calls get an action
+
+**An article is for calls that do something the database cannot.** Agents
+read data with SQL: the `query_database` MCP tool, guided by the
+repository's `docs/db_schema.md`. So an action that only returns rows the
+database already holds (a list, a get by id, a count) is not added. The
+question it would answer goes into `docs/db_schema.md` as a query instead
+(the `db-schema-doc` skill, "Useful questions"). The same holds for data
+another MCP tool already reads, such as lyabah-service's wiki (`read_wiki`,
+`list_wiki`).
+
+These get an action:
+- every call that changes data: create, update, delete, publish, start a job;
+- a read that does work the database cannot: it fetches a page live, it
+  previews or renders something, it computes a diff, it asks another
+  service.
+
+When an endpoint already has a plain read, such as `GET /api/<things>` for
+the site's own pages, leave the endpoint as it is: only the article leaves
+it out.
+
 ## The approve_required rule
 
 A call needs a person's approval unless it says `approve_required: false`.
 The default is `true`, and `false` for `GET`. Set it on each action, never in
 `base`:
 
-- `false` only for a call that changes nothing: a read, a preview, a check.
-  Then agents can `call_api` it and get the answer at once.
+- `false` only for a call that changes nothing: a preview, a live check, a
+  computation (see "Which calls get an action": not a plain read of the
+  database). Then agents can `call_api` it and get the answer at once.
 - `true` on a `GET` that does change something (it marks a message read, it
   starts a job). Never leave such a `GET` on its default.
 

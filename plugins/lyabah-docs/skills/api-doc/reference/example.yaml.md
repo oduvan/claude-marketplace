@@ -1,5 +1,5 @@
 ---
-summary: The shop's posts - read one, replace its text, or publish and hide it.
+summary: The shop's posts - preview new HTML, replace a post's text, or publish and hide it.
 writes:
   - lyabah_shop.posts.title_en
   - lyabah_shop.posts.title_uk
@@ -16,7 +16,7 @@ params:
     type: string
     enum: [en, uk]
     default: en
-    description: Which language's text to read or replace (title_en or title_uk, html_en or html_uk).
+    description: Which language's text to preview or replace (title_en or title_uk, html_en or html_uk).
   title:
     type: string
     minLength: 1
@@ -51,11 +51,19 @@ actions:
       html:
         $param: html
       source: agent
-  get:
-    method: GET
+  preview:
+    method: POST
+    path: /api/posts/{$slug}/preview
+    approve_required: false
+    required:
+      - slug
+      - html
     query:
       lang:
         $param: lang
+    body:
+      html:
+        $param: html
   publish:
     method: PATCH
     required:
@@ -81,13 +89,19 @@ lyabah-service sends them with `draft=1`: the site then checks everything
 changes nothing, so the reviewer sees the outcome first. The draft answer
 carries `X-Draft-Checksum`, a checksum of the post's current revision; the
 approved call sends it back, and the site changes nothing when the post was
-edited in between. `get` changes nothing, so it can be called at once.
+edited in between. `preview` renders HTML the way readers would see it and
+stores nothing, so it can be called at once.
+
+There is no action to read a post: read it with SQL (`query_database` on
+`lyabah_shop`, as `docs/db_schema.md` explains), for example
+`SELECT title_en, html_en, published FROM posts WHERE slug = 'spring-sale'`.
 
 ## Turning a request into parameters
 
-- "Fix the typo in the spring sale post": `get` it first (`slug:
-  spring-sale`), fix the text, then `replace` with the whole title
-  and HTML: it replaces, it does not patch.
+- "Fix the typo in the spring sale post": read its title and HTML with SQL
+  first, fix the text, then `replace` with the whole title and HTML: it
+  replaces, it does not patch.
+- "Will this HTML look right?": `preview` it before `replace`.
 - "Translate it into Ukrainian": `replace` with `lang: uk` and the
   Ukrainian title and HTML.
 - "Hide the spring sale post": `publish` with `published: false`.
@@ -95,12 +109,14 @@ edited in between. `get` changes nothing, so it can be called at once.
 
 ## Reading the answer
 
-`replace` and `publish` answer `200` with the post as it is now;
-`get` answers the same for the language asked:
+`replace` and `publish` answer `200` with the post as it is now:
 
 ```json
 {"slug": "spring-sale", "lang": "en", "title": "Spring sale", "html": "<p>…</p>", "published": true, "updated_at": "2026-10-20T10:00:00Z"}
 ```
+
+`preview` answers `200` with `{"html": "…"}`: the page as readers would see
+it. Nothing was stored.
 
 - `title` and `html` are the text now. If they are what you sent, the change
   worked: tell the person the post's new title.
@@ -116,7 +132,7 @@ Other answers:
   Tell the person which tag was refused, remove it and try again.
 - `404`: no post has that slug. It may be misspelt, or deleted. Say so.
 - `409`: someone changed the post after you read it, so nothing was saved.
-  `get` it again, redo the change and prepare a new call.
+  Read it again with SQL, redo the change and prepare a new call.
 - `412`: the post was edited after the owner approved the call (its checksum
   no longer matches), so nothing was saved. The call went back to the owner
   for another review; say so.
