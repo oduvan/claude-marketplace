@@ -52,7 +52,7 @@ leaves it out (see the `api-doc` skill).
 8. With `draft=1` the endpoint does everything the real call does (the
    checks, the reads, the database writes) inside one transaction. Then it
    rolls back, and answers exactly as the real call would: same status, same
-   body, plus the header `X-Draft: 1`. Values the database makes up (a new
+   body, plus the checksum header (rule 10). Values the database makes up (a new
    id, a timestamp) will differ in the real call; say so in the article.
 9. Work outside the database (sending mail, calling another API, writing a
    file, publishing) is not done in a draft. The draft answers as if it had
@@ -105,5 +105,5 @@ leaves it out (see the `api-doc` skill).
 | The draft sends the email, or calls the other API | Do it only when `draft=0` (rule 9) |
 | `updated_at` or a counter in the checksum | Only the fields the change depends on (rule 10) |
 | The checksum is compared after the write, or without a lock | Lock, compare, then write (rule 11) |
-| The draft answers 200 where the real call answers 201 | Same status and body; only `X-Draft` differs (rule 8) |
+| The draft answers 200 where the real call answers 201 | Same status and body; only the checksum header differs (rule 8) |
 | A different endpoint that "previews" stands in for the draft | Preview is a separate action with `approve_required: false`; the action itself still takes `draft` |

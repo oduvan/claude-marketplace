@@ -115,9 +115,8 @@ query:
 With `draft=1` the endpoint must do everything the real call does (checks,
 page reads, database writes) and answer exactly as it would, but apply
 nothing. When it does not do that yet, add it to the endpoint in the same
-change: run the work in a transaction and roll it back on `draft=1`, set
-`X-Draft: 1` on the answer, and refuse any value but `0` and `1` with a
-`400`. `0`, or no `draft`, applies the call.
+change: run the work in a transaction and roll it back on `draft=1`, and refuse
+any value but `0` and `1` with a `400`. `0`, or no `draft`, applies the call.
 
 A different endpoint that only previews (it takes other input, or refuses
 unknown fields) is not a draft. Make it an action of its own, often with
