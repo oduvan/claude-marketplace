@@ -87,13 +87,12 @@ func (s *Server) ping(w http.ResponseWriter, r *http.Request) {
 }
 
 // isDraft reads ?draft=: 1 checks the call, 0 or none applies it. It answers
-// 400 itself for anything else, and marks a draft's answer with X-Draft: 1.
+// 400 itself for anything else.
 func isDraft(w http.ResponseWriter, r *http.Request) (draft, ok bool) {
 	switch v := r.URL.Query().Get("draft"); v {
 	case "", "0":
 		return false, true
 	case "1":
-		w.Header().Set("X-Draft", "1")
 		return true, true
 	default:
 		writeError(w, http.StatusBadRequest, fmt.Sprintf("draft must be 0 or 1, not %q", v))
@@ -282,7 +281,7 @@ func TestDraftAndChecksum(t *testing.T) {
 	}
 	d := call(t, ts, "PATCH", "/api/books/1?draft=1", `{"title":"Kobzar, 1840"}`, auth...)
 	sum := d.Header.Get("X-Draft-Checksum")
-	if d.StatusCode != 200 || d.Header.Get("X-Draft") != "1" || len(sum) != 64 || title(t, db) != "Kobzar" {
+	if d.StatusCode != 200 || len(sum) != 64 || title(t, db) != "Kobzar" {
 		t.Fatalf("a draft answers as the real call and changes nothing: %d %v", d.StatusCode, d.Header)
 	}
 	db.Exec(context.Background(), `UPDATE books SET updated_at = now() + interval '1 hour'`)

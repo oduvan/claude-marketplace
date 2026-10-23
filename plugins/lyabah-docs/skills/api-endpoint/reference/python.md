@@ -75,7 +75,6 @@ def is_draft(draft: str | None, response: Response) -> bool:
     if draft in (None, "", "0"):
         return False
     if draft == "1":
-        response.headers["X-Draft"] = "1"
         return True
     raise HTTPException(400, f"draft must be 0 or 1, not {draft!r}")
 
@@ -195,7 +194,7 @@ def test_draft_and_checksum(db):
     assert c.patch("/api/books/1?draft=yes", json={"title": "X"}, headers=AUTH).status_code == 400
     d = c.patch("/api/books/1?draft=1", json={"title": "Kobzar, 1840"}, headers=AUTH)
     s = d.headers["X-Draft-Checksum"]
-    assert d.status_code == 200 and d.headers["X-Draft"] == "1" and len(s) == 64 and title(db) == "Kobzar"
+    assert d.status_code == 200 and len(s) == 64 and title(db) == "Kobzar"
     db.execute("UPDATE books SET updated_at = now() + interval '1 hour'")
     again = c.patch("/api/books/1?draft=1", json={"title": "Kobzar, 1840"}, headers=AUTH).headers["X-Draft-Checksum"]
     assert again == s, "updated_at must not change the checksum"
