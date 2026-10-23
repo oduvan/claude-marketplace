@@ -45,7 +45,8 @@ The article's name is the path under `docs/api/` without `.yaml.md`:
    what it changes.
 2. **Declare every input once** in the article's `params`, with the server's
    own limits (`maxLength`, `pattern`, `enum`, `minimum`…) and a `description`
-   that names the column it lands in when the names differ.
+   that names the column it lands in when the names differ. Mark a parameter
+   with the sequence stop rule below when its value names another object.
 3. **Write each call:** `method`, `path` (`{$id}` for a path segment),
    `required` (the params this call needs), and `query`, `headers` and `body`
    with `{$param: name}` where a parameter goes and constants as they are. A
@@ -144,6 +145,23 @@ nothing. A call without the header is not checked.
   action that needs approval when its state changes fast; never in `base`.
 - Explain the `412` in the Markdown: the call went back to the owner for
   another review.
+
+## The sequence stop rule
+
+In one group, a call can take a parameter from an earlier call's response
+(`{$result: {call: 1, path: post.id}}`), for example a translation that needs
+the post call 1 creates. Mark a parameter `sequence_stop: true` when its value
+**names an object**, by its id or its slug, that some action creates: a
+parent post, the resource to delete, the order an item belongs to.
+
+- A call that takes such a value from an earlier call waits until that call
+  has really run, and is checked then: before, the object does not exist,
+  so the endpoint's draft could only answer 404.
+- Leave it off a parameter whose value is plain data, such as a title or a
+  URL: those are taken from the earlier call's draft response, and the call
+  is checked at once.
+- In the Markdown, say how to use it when a common task needs it ("create
+  the post, then its translation with `slug` from call 1's answer").
 
 ## The writes rule
 
