@@ -67,6 +67,13 @@ to the article.
   non-Latin letters can pass the doc and still be refused.
 - A `default` must itself match the schema.
 - Numbers of 2^53 or more cannot be sent exactly: make such ids strings.
+- `sequence_stop: true` (not JSON Schema; the service takes it out) marks a
+  parameter whose value names an object, by its id or its slug, that an
+  earlier call in the same group may create. A call that takes such a value
+  from an earlier call's response (`{$result: {call: 1, path: id}}` in
+  `prepare_api_call`) waits until that call has really run: before that,
+  the object does not exist, so its draft could only fail. `true` or
+  `false`; anything else is an error.
 
 ## Parameters in values
 
