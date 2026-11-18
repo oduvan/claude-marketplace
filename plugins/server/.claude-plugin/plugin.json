@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "description": "Reviewed skills for running services: Docker and Docker Compose.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "docker",
+    "compose",
+    "server"
+  ]
+}

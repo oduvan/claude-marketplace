@@ -1,0 +1,18 @@
+{
+  "name": "web-games",
+  "version": "0.1.0",
+  "description": "Reviewed skills for websites and web games: frontend design, browser testing, three.js, game feel and game UI.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "Apache-2.0",
+  "keywords": [
+    "web",
+    "games",
+    "threejs",
+    "frontend",
+    "playwright"
+  ]
+}

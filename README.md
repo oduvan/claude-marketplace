@@ -1,6 +1,7 @@
 # lyabah Claude Code marketplace
 
-Claude Code plugins for the lyabah projects.
+Claude Code plugins for the lyabah projects, and a reviewed set of community
+skills in four more plugins: `workflow`, `languages`, `web-games` and `server`.
 
 ## Install
 
@@ -18,6 +19,10 @@ claude plugin marketplace add oduvan/claude-marketplace
 claude plugin install lyabah-docs@lyabah
 ```
 
+The other plugins install the same way: `workflow@lyabah`, `languages@lyabah`,
+`web-games@lyabah`, `server@lyabah`. Each project turns on only the ones it
+needs.
+
 ## lyabah-docs
 
 [lyabah-service](https://service.lyabah.com/help.md) copies the `docs/` folder
@@ -33,3 +38,71 @@ one skill for each, and one for building the endpoints those articles describe.
 The skills start on their own when an agent writes or changes one of these
 files, or adds a migration. You can also ask for them by name, for example
 "use api-doc to describe POST /api/posts".
+
+## Reviewed community skills
+
+These skills come from other repositories. Each one is a full copy taken at a
+fixed commit, after reading it. Nothing here updates on its own.
+
+### workflow
+
+| Skill | Source | What it does |
+|---|---|---|
+| `diagnosing-bugs` | mattpocock/skills | Builds a fast pass/fail check for the bug first, then looks for the cause. |
+| `verification-before-completion` | obra/superpowers | No "done" without running the check and showing its output. |
+| `tdd` | mattpocock/skills | Red, then green, with tests at agreed public interfaces. |
+| `grilling` | mattpocock/skills | Asks questions in rounds, each with a suggested answer, before building. |
+| `code-review` | mattpocock/skills | Reviews a diff twice: against the repo's standards and against the spec. |
+| `code-simplification` | addyosmani/agent-skills | Makes code simpler without changing what it does. |
+| `security-and-hardening` | addyosmani/agent-skills | Threat model and checklist for web services. |
+| `git-guardrails-claude-code` | mattpocock/skills | Sets up a hook that blocks force push, `reset --hard`, `clean` and `branch -D`. |
+
+### languages
+
+| Skill | Source | What it does |
+|---|---|---|
+| `go` | spf13/go-skills | Idiomatic Go. Reads the `go` version in `go.mod` before it suggests a feature. |
+| `rust-patterns` | affaan-m/ECC | Ownership, error handling, traits and concurrency in Rust. |
+
+### web-games
+
+| Skill | Source | What it does |
+|---|---|---|
+| `frontend-design` | anthropics/skills | Pages with their own look, not a template. |
+| `webapp-testing` | anthropics/skills | Playwright tests against a local web app. |
+| `threejs-scene-setup` | gamedev-skills/awesome-gamedev-agent-skills | Scene, camera, renderer, render loop and resize in three.js. |
+| `threejs-gltf-loading` | gamedev-skills/awesome-gamedev-agent-skills | Loads glTF/GLB models and plays their animations. |
+| `threejs-materials-lighting` | gamedev-skills/awesome-gamedev-agent-skills | Materials, lights, shadows and environment lighting. |
+| `game-feel` | gamedev-skills/awesome-gamedev-agent-skills | Screen shake, hit-stop, easing, squash and stretch. |
+| `game-ui-ux` | gamedev-skills/awesome-gamedev-agent-skills | HUDs and menus that scale, with safe areas for phones. |
+
+### server
+
+| Skill | Source | What it does |
+|---|---|---|
+| `docker-patterns` | affaan-m/ECC | Dockerfiles and Compose: networks, volumes, security, debugging. |
+
+### Where each copy came from
+
+[`upstream.json`](upstream.json) has two lists:
+
+- `watch`: the repositories this marketplace follows, each with the last
+  commit that was reviewed.
+- `skills`: one entry per copied skill, with its source repository, path and
+  commit, and every local change made to it.
+
+A skill folder is the same as its source at that commit, apart from the
+changes listed for it in `upstream.json`.
+
+### Updates
+
+An update from a source repository is read first, and then taken, skipped or
+adapted by hand. The commit in `upstream.json` moves only when that review is
+done.
+
+### Licenses
+
+The copied skills keep their own licenses. The license texts are in
+[`THIRD_PARTY_LICENSES/`](THIRD_PARTY_LICENSES); the two skills from
+anthropics/skills carry their own `LICENSE.txt`. The MIT license in `LICENSE`
+covers the rest of this repository.

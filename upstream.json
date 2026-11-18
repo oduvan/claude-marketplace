@@ -1,0 +1,200 @@
+{
+  "reviewed": "2026-11-18",
+  "watch": [
+    {
+      "repo": "mattpocock/skills",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "license": "MIT"
+    },
+    {
+      "repo": "obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT"
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "commit": "39b723ceebf81474d0557c1fecd01eddab585563",
+      "license": "MIT"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "license": "MIT"
+    },
+    {
+      "repo": "anthropics/skills",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "spf13/go-skills",
+      "commit": "383c2f8916313b7f1260a6d15d92a468e4ecc89e",
+      "license": "MIT"
+    }
+  ],
+  "skills": [
+    {
+      "plugin": "workflow",
+      "skill": "diagnosing-bugs",
+      "repo": "mattpocock/skills",
+      "path": "skills/engineering/diagnosing-bugs",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "changes": []
+    },
+    {
+      "plugin": "workflow",
+      "skill": "verification-before-completion",
+      "repo": "obra/superpowers",
+      "path": "skills/verification-before-completion",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "changes": []
+    },
+    {
+      "plugin": "workflow",
+      "skill": "tdd",
+      "repo": "mattpocock/skills",
+      "path": "skills/engineering/tdd",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "changes": [
+        "SKILL.md: removed the paragraph that calls the codebase-design skill, which is not in this marketplace."
+      ]
+    },
+    {
+      "plugin": "workflow",
+      "skill": "grilling",
+      "repo": "mattpocock/skills",
+      "path": "skills/productivity/grilling",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "changes": []
+    },
+    {
+      "plugin": "workflow",
+      "skill": "code-review",
+      "repo": "mattpocock/skills",
+      "path": "skills/engineering/code-review",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "changes": [
+        "SKILL.md: replaced the /setup-matt-pocock-skills requirement and the tracker-doc reference with reading specs through the gh or glab CLI."
+      ]
+    },
+    {
+      "plugin": "workflow",
+      "skill": "code-simplification",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/code-simplification",
+      "commit": "39b723ceebf81474d0557c1fecd01eddab585563",
+      "changes": []
+    },
+    {
+      "plugin": "workflow",
+      "skill": "security-and-hardening",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/security-and-hardening",
+      "commit": "39b723ceebf81474d0557c1fecd01eddab585563",
+      "changes": [
+        "references/security-checklist.md: copied from the upstream file references/security-checklist.md at the repo root.",
+        "SKILL.md: three paths changed from ../../references/security-checklist.md to references/security-checklist.md."
+      ]
+    },
+    {
+      "plugin": "workflow",
+      "skill": "git-guardrails-claude-code",
+      "repo": "mattpocock/skills",
+      "path": "skills/misc/git-guardrails-claude-code",
+      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "changes": [
+        "scripts/block-dangerous-git.sh: an ordinary git push is allowed; force push (--force, -f, --force-with-lease) stays blocked.",
+        "SKILL.md: description, blocked list and verify command updated to match the script."
+      ]
+    },
+    {
+      "plugin": "languages",
+      "skill": "go",
+      "repo": "spf13/go-skills",
+      "path": "go",
+      "commit": "383c2f8916313b7f1260a6d15d92a468e4ecc89e",
+      "changes": [
+        "Removed .claude-plugin/plugin.json, the upstream plugin packaging file."
+      ]
+    },
+    {
+      "plugin": "languages",
+      "skill": "rust-patterns",
+      "repo": "affaan-m/ECC",
+      "path": "skills/rust-patterns",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "frontend-design",
+      "repo": "anthropics/skills",
+      "path": "skills/frontend-design",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "webapp-testing",
+      "repo": "anthropics/skills",
+      "path": "skills/webapp-testing",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "threejs-scene-setup",
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "path": "skills/web-engines/threejs-scene-setup",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "threejs-gltf-loading",
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "path": "skills/web-engines/threejs-gltf-loading",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "threejs-materials-lighting",
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "path": "skills/web-engines/threejs-materials-lighting",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "game-feel",
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "path": "skills/disciplines/game-feel",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "changes": []
+    },
+    {
+      "plugin": "web-games",
+      "skill": "game-ui-ux",
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "path": "skills/disciplines/game-ui-ux",
+      "commit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "changes": []
+    },
+    {
+      "plugin": "server",
+      "skill": "docker-patterns",
+      "repo": "affaan-m/ECC",
+      "path": "skills/docker-patterns",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "changes": [
+        "SKILL.md: removed the section 'Hardened CLI Installer Harnesses' (ECC's own installer tests) and the matching words in the description."
+      ]
+    }
+  ]
+}
