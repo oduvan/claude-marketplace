@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
-The spec usually lives in the project's issue tracker (GitHub or GitLab) or in a file in the repo. Read issues with the `gh` or `glab` CLI when one is available; if neither is, ask the user for the spec text or a path.
+The spec usually lives in a GitHub issue or in a file in the repo. Read issues with the `gh` CLI; if it is not available, ask the user for the spec text or a path.
 
 ## Process
 
@@ -26,7 +26,7 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 
 Look for the originating spec, in this order:
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched with the `gh` or `glab` CLI.
+1. Issue references in the commit messages (`#123`, `Closes #45`), fetched with `gh issue view`.
 2. A path the user passed as an argument.
 3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
 4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".

@@ -145,7 +145,7 @@
       "path": "skills/engineering/code-review",
       "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
       "changes": [
-        "SKILL.md: replaced the /setup-matt-pocock-skills requirement and the tracker-doc reference with reading specs through the gh or glab CLI."
+        "SKILL.md: specs are read from GitHub issues with the gh CLI. This replaces the /setup-matt-pocock-skills requirement, the tracker-doc reference and the GitLab notation."
       ]
     },
     {
