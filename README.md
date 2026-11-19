@@ -58,6 +58,7 @@ fixed commit, after reading it. Nothing here updates on its own.
 | `security-and-hardening` | addyosmani/agent-skills | Threat model and checklist for web services. |
 | `git-guardrails-claude-code` | mattpocock/skills | Sets up a hook that blocks force push, `reset --hard`, `clean` and `branch -D`. |
 | `setup-standards` | this repository | Writes the project's coding standards as one rule file per language in `.claude/rules/`. `code-review` checks against them. |
+| `pull-request` | this repository | Branch names, pull request titles and descriptions, and merging, the way this owner does them. |
 
 ### go
 
