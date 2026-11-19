@@ -1,0 +1,19 @@
+{
+  "name": "workflow",
+  "version": "0.1.0",
+  "description": "Reviewed skills for everyday development: debugging, tests, review, simplifying code, security and git safety.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "debugging",
+    "tdd",
+    "code-review",
+    "security",
+    "git"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "languages",
+  "version": "0.1.0",
+  "description": "Reviewed language skills: idiomatic Go and Rust.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "go",
+    "golang",
+    "rust"
+  ]
+}
