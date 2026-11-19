@@ -1,5 +1,54 @@
 {
   "reviewed": "2026-11-18",
+  "focus": [
+    "Development tooling and workflow for Claude Code",
+    "Websites and web games, with three.js as the game engine",
+    "A little mobile development",
+    "Server orchestration, mostly Docker and Docker Compose",
+    "Languages in use: Go, Python, JavaScript, TypeScript. Rust is starting."
+  ],
+  "declined": [
+    {
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "skill": "ebitengine-game",
+      "reason": "Go game engine, not needed."
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "skill": "golang-patterns",
+      "reason": "Textbook content; the spf13 go skill is used."
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "skill": "python-patterns",
+      "reason": "Textbook content the model already knows."
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "skill": "python-testing",
+      "reason": "Textbook content the model already knows."
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "skill": "deployment-patterns",
+      "reason": "Generic; GitHub Actions and Kubernetes only."
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "skill": "ci-cd-and-automation",
+      "reason": "GitHub Actions only."
+    },
+    {
+      "repo": "multica-ai/andrej-karpathy-skills",
+      "skill": "karpathy-guidelines",
+      "reason": "One skill, no updates since April 2026; repository not watched."
+    },
+    {
+      "repo": "vercel-labs/agent-skills",
+      "skill": "web-design-guidelines",
+      "reason": "Downloads its rules from a URL on every run; repository not watched."
+    }
+  ],
   "watch": [
     {
       "repo": "mattpocock/skills",
@@ -44,7 +93,13 @@
       "repo": "mattpocock/skills",
       "path": "skills/engineering/diagnosing-bugs",
       "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
-      "changes": []
+      "changes": [],
+      "related": [
+        {
+          "repo": "obra/superpowers",
+          "path": "skills/systematic-debugging"
+        }
+      ]
     },
     {
       "plugin": "workflow",
@@ -62,6 +117,12 @@
       "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
       "changes": [
         "SKILL.md: removed the paragraph that calls the codebase-design skill, which is not in this marketplace."
+      ],
+      "related": [
+        {
+          "repo": "obra/superpowers",
+          "path": "skills/test-driven-development"
+        }
       ]
     },
     {
@@ -95,6 +156,9 @@
       "skill": "security-and-hardening",
       "repo": "addyosmani/agent-skills",
       "path": "skills/security-and-hardening",
+      "extra_paths": [
+        "references/security-checklist.md"
+      ],
       "commit": "39b723ceebf81474d0557c1fecd01eddab585563",
       "changes": [
         "references/security-checklist.md: copied from the upstream file references/security-checklist.md at the repo root.",
@@ -120,6 +184,12 @@
       "commit": "383c2f8916313b7f1260a6d15d92a468e4ecc89e",
       "changes": [
         "Removed .claude-plugin/plugin.json, the upstream plugin packaging file."
+      ],
+      "related": [
+        {
+          "repo": "affaan-m/ECC",
+          "path": "skills/golang-patterns"
+        }
       ]
     },
     {
@@ -194,6 +264,12 @@
       "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
       "changes": [
         "SKILL.md: removed the section 'Hardened CLI Installer Harnesses' (ECC's own installer tests) and the matching words in the description."
+      ],
+      "related": [
+        {
+          "repo": "affaan-m/ECC",
+          "path": "skills/deployment-patterns"
+        }
       ]
     }
   ]

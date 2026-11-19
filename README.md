@@ -94,11 +94,40 @@ fixed commit, after reading it. Nothing here updates on its own.
 A skill folder is the same as its source at that commit, apart from the
 changes listed for it in `upstream.json`.
 
+`upstream.json` also holds:
+
+- `focus`: what this marketplace is for. A new upstream skill is suggested
+  only when it fits.
+- `declined`: skills that were looked at and not taken, with the reason, so
+  they are not suggested again.
+- `related`, on a skill: upstream skills that are not copied but cover the
+  same ground. Their changes are read for ideas.
+- `extra_paths`, on a skill: upstream files outside the skill's folder that
+  the copy includes.
+
 ### Updates
 
-An update from a source repository is read first, and then taken, skipped or
-adapted by hand. The commit in `upstream.json` moves only when that review is
-done.
+The `review-upstream` skill in `.claude/skills/` reads what the watched
+repositories changed over a period and writes suggestions. It runs inside
+this repository:
+
+```
+/review-upstream days=7
+/review-upstream since=2026-11-01 until=2026-11-15
+/review-upstream
+```
+
+With no arguments the period is "since the last review". Each run writes
+`reviews/YYYY-MM-DD.md` and opens a pull request with it:
+
+- updates to copied skills, each marked Take, Adapt or Skip with the reason;
+- ideas from related skills;
+- new skills that fit `focus`;
+- a few sentences on what the watched repositories are working on.
+
+The run changes no skill. It moves `watch[].commit` to the commits it read,
+so merging the pull request marks the review as read. A skill's own `commit`
+moves only when its update is taken, by hand, in a separate change.
 
 ### Licenses
 
