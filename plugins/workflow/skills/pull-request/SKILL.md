@@ -97,5 +97,9 @@ In a Claude Code cloud session:
 ```bash
 gh api repos/<owner>/<repo>/pulls/<number>/merge -X PUT \
   -f merge_method=squash -f commit_title="<title> (#<number>)"
-gh api repos/<owner>/<repo>/git/refs/heads/<branch> -X DELETE
 ```
+
+A cloud session cannot delete a branch. GitHub removes it at merge when the
+repository setting "Automatically delete head branches" is on. When the
+branch is still there after the merge, say so in the reply and do not try
+another way to delete it.
