@@ -57,6 +57,7 @@ fixed commit, after reading it. Nothing here updates on its own.
 | `code-simplification` | addyosmani/agent-skills | Makes code simpler without changing what it does. |
 | `security-and-hardening` | addyosmani/agent-skills | Threat model and checklist for web services. |
 | `git-guardrails-claude-code` | mattpocock/skills | Sets up a hook that blocks force push, `reset --hard`, `clean` and `branch -D`. |
+| `setup-standards` | this repository | Writes the project's coding standards as one rule file per language in `.claude/rules/`. `code-review` checks against them. |
 
 ### go
 
