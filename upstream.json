@@ -47,6 +47,11 @@
       "repo": "vercel-labs/agent-skills",
       "skill": "web-design-guidelines",
       "reason": "Downloads its rules from a URL on every run; repository not watched."
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "skill": "rust-patterns",
+      "reason": "Textbook content the model already knows."
     }
   ],
   "watch": [
@@ -177,7 +182,7 @@
       ]
     },
     {
-      "plugin": "languages",
+      "plugin": "go",
       "skill": "go",
       "repo": "spf13/go-skills",
       "path": "go",
@@ -193,15 +198,7 @@
       ]
     },
     {
-      "plugin": "languages",
-      "skill": "rust-patterns",
-      "repo": "affaan-m/ECC",
-      "path": "skills/rust-patterns",
-      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
-      "changes": []
-    },
-    {
-      "plugin": "web-games",
+      "plugin": "web",
       "skill": "frontend-design",
       "repo": "anthropics/skills",
       "path": "skills/frontend-design",
@@ -209,7 +206,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "web",
       "skill": "webapp-testing",
       "repo": "anthropics/skills",
       "path": "skills/webapp-testing",
@@ -217,7 +214,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "threejs",
       "skill": "threejs-scene-setup",
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "path": "skills/web-engines/threejs-scene-setup",
@@ -225,7 +222,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "threejs",
       "skill": "threejs-gltf-loading",
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "path": "skills/web-engines/threejs-gltf-loading",
@@ -233,7 +230,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "threejs",
       "skill": "threejs-materials-lighting",
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "path": "skills/web-engines/threejs-materials-lighting",
@@ -241,7 +238,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "game-design",
       "skill": "game-feel",
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "path": "skills/disciplines/game-feel",
@@ -249,7 +246,7 @@
       "changes": []
     },
     {
-      "plugin": "web-games",
+      "plugin": "game-design",
       "skill": "game-ui-ux",
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "path": "skills/disciplines/game-ui-ux",
@@ -257,7 +254,7 @@
       "changes": []
     },
     {
-      "plugin": "server",
+      "plugin": "docker",
       "skill": "docker-patterns",
       "repo": "affaan-m/ECC",
       "path": "skills/docker-patterns",
