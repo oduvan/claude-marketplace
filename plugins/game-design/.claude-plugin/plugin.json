@@ -1,0 +1,16 @@
+{
+  "name": "game-design",
+  "version": "0.1.0",
+  "description": "Reviewed skills for games on any engine: game feel and game UI.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "Apache-2.0",
+  "keywords": [
+    "games",
+    "game-feel",
+    "ui"
+  ]
+}

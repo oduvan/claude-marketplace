@@ -1,0 +1,15 @@
+{
+  "name": "go",
+  "version": "0.1.0",
+  "description": "Reviewed skill for idiomatic Go that follows the Go version in go.mod.",
+  "author": {
+    "name": "Alexander Lyabah",
+    "url": "https://github.com/oduvan"
+  },
+  "repository": "https://github.com/oduvan/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "go",
+    "golang"
+  ]
+}

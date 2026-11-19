@@ -1,7 +1,7 @@
 {
-  "name": "web-games",
+  "name": "web",
   "version": "0.1.0",
-  "description": "Reviewed skills for websites and web games: frontend design, browser testing, three.js, game feel and game UI.",
+  "description": "Reviewed skills for websites: frontend design and browser testing with Playwright.",
   "author": {
     "name": "Alexander Lyabah",
     "url": "https://github.com/oduvan"
@@ -10,8 +10,6 @@
   "license": "Apache-2.0",
   "keywords": [
     "web",
-    "games",
-    "threejs",
     "frontend",
     "playwright"
   ]

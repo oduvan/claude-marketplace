@@ -1,7 +1,8 @@
 # lyabah Claude Code marketplace
 
 Claude Code plugins for the lyabah projects, and a reviewed set of community
-skills in four more plugins: `workflow`, `languages`, `web-games` and `server`.
+skills in six more plugins: `workflow`, `go`, `web`, `threejs`, `game-design`
+and `docker`.
 
 ## Install
 
@@ -19,9 +20,9 @@ claude plugin marketplace add oduvan/claude-marketplace
 claude plugin install lyabah-docs@lyabah
 ```
 
-The other plugins install the same way: `workflow@lyabah`, `languages@lyabah`,
-`web-games@lyabah`, `server@lyabah`. Each project turns on only the ones it
-needs.
+The other plugins install the same way, for example `workflow@lyabah` or
+`go@lyabah`. A plugin holds skills that a project turns on together, so each
+project installs only the ones it needs.
 
 ## lyabah-docs
 
@@ -57,26 +58,35 @@ fixed commit, after reading it. Nothing here updates on its own.
 | `security-and-hardening` | addyosmani/agent-skills | Threat model and checklist for web services. |
 | `git-guardrails-claude-code` | mattpocock/skills | Sets up a hook that blocks force push, `reset --hard`, `clean` and `branch -D`. |
 
-### languages
+### go
 
 | Skill | Source | What it does |
 |---|---|---|
 | `go` | spf13/go-skills | Idiomatic Go. Reads the `go` version in `go.mod` before it suggests a feature. |
-| `rust-patterns` | affaan-m/ECC | Ownership, error handling, traits and concurrency in Rust. |
 
-### web-games
+### web
 
 | Skill | Source | What it does |
 |---|---|---|
 | `frontend-design` | anthropics/skills | Pages with their own look, not a template. |
 | `webapp-testing` | anthropics/skills | Playwright tests against a local web app. |
+
+### threejs
+
+| Skill | Source | What it does |
+|---|---|---|
 | `threejs-scene-setup` | gamedev-skills/awesome-gamedev-agent-skills | Scene, camera, renderer, render loop and resize in three.js. |
 | `threejs-gltf-loading` | gamedev-skills/awesome-gamedev-agent-skills | Loads glTF/GLB models and plays their animations. |
 | `threejs-materials-lighting` | gamedev-skills/awesome-gamedev-agent-skills | Materials, lights, shadows and environment lighting. |
+
+### game-design
+
+| Skill | Source | What it does |
+|---|---|---|
 | `game-feel` | gamedev-skills/awesome-gamedev-agent-skills | Screen shake, hit-stop, easing, squash and stretch. |
 | `game-ui-ux` | gamedev-skills/awesome-gamedev-agent-skills | HUDs and menus that scale, with safe areas for phones. |
 
-### server
+### docker
 
 | Skill | Source | What it does |
 |---|---|---|

@@ -1,16 +1,17 @@
 {
-  "name": "languages",
+  "name": "threejs",
   "version": "0.1.0",
-  "description": "Reviewed language skills: idiomatic Go and Rust.",
+  "description": "Reviewed skills for three.js: scene setup, glTF loading, materials and lighting.",
   "author": {
     "name": "Alexander Lyabah",
     "url": "https://github.com/oduvan"
   },
   "repository": "https://github.com/oduvan/claude-marketplace",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
-    "go",
-    "golang",
-    "rust"
+    "threejs",
+    "3d",
+    "webgl",
+    "gltf"
   ]
 }
