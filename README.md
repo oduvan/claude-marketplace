@@ -119,23 +119,34 @@ changes listed for it in `upstream.json`.
 
 ### Updates
 
-The `review-upstream` skill in `.claude/skills/` reads what the watched
-repositories changed over a period and writes suggestions. It runs inside
-this repository:
+The `marketplace-review` skill in `.claude/skills/` is the periodic review. It
+runs inside this repository, on the machine where the owner works:
 
 ```
-/review-upstream days=7
-/review-upstream since=2026-11-01 until=2026-11-15
-/review-upstream
+/marketplace-review days=7
+/marketplace-review since=2026-11-01 until=2026-11-15
+/marketplace-review
 ```
 
-With no arguments the period is "since the last review". Each run writes
-`reviews/YYYY-MM-DD.md` and opens a pull request with it:
+With no arguments the period is "since the last review". Each run reads two
+things:
+
+- **The watched repositories:** what they changed in the period.
+- **The Claude Code sessions on this machine:** which skills were used and
+  how each use went. It also reads the pipeline run summaries on Lyabah
+  Service when that connector is available.
+
+It writes `reviews/YYYY-MM-DD.md` and opens a pull request with it:
 
 - updates to copied skills, each marked Take, Adapt or Skip with the reason;
-- ideas from related skills;
-- new skills that fit `focus`;
-- a few sentences on what the watched repositories are working on.
+- ideas from related skills, and new upstream skills that fit `focus`;
+- how often each skill was used and how it went;
+- edits the skills here need, as exact text;
+- new skills, rules or hooks worth building, from work that was repeated.
+
+The report in this public repository names skills and kinds of work only. It
+holds no project names, file paths, code or prompts. The details that name
+projects go to `~/.claude/marketplace-review/` on the owner's machine.
 
 The run changes no skill. It moves `watch[].commit` to the commits it read,
 so merging the pull request marks the review as read. A skill's own `commit`
