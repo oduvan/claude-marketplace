@@ -53,6 +53,8 @@ fixed commit, after reading it. Nothing here updates on its own.
 | `verification-before-completion` | obra/superpowers | No "done" without running the check and showing its output. |
 | `tdd` | mattpocock/skills | Red, then green, with tests at agreed public interfaces. |
 | `grilling` | mattpocock/skills | Asks questions in rounds, each with a suggested answer, before building. |
+| `brainstorming` | obra/superpowers | Finds out what the person wants and why, agrees on an approach, and writes a design doc before anything is built. |
+| `writing-plans` | obra/superpowers | Turns a design or spec into a plan of small tasks, each with its files, interfaces and tests. |
 | `code-review` | mattpocock/skills | Reviews a diff twice: against the repo's standards and against the spec. |
 | `code-simplification` | addyosmani/agent-skills | Makes code simpler without changing what it does. |
 | `security-and-hardening` | addyosmani/agent-skills | Threat model and checklist for web services. |
