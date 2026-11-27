@@ -1,6 +1,6 @@
 {
   "name": "workflow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reviewed skills for everyday development: debugging, tests, review, simplifying code, security and git safety.",
   "author": {
     "name": "Alexander Lyabah",
