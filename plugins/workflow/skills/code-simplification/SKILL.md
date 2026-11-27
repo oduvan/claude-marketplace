@@ -142,7 +142,7 @@ Scan for these patterns — each one is a concrete signal, not a vague smell:
 | Abbreviated names | `usr`, `cfg`, `btn`, `evt` | Use full words unless the abbreviation is universal (`id`, `url`, `api`) |
 | Misleading names | Function named `get` that also mutates state | Rename to reflect actual behavior |
 | Comments explaining "what" | `// increment counter` above `count++` | Delete the comment — the code is clear enough |
-| Comments explaining "why" | `// Retry because the API is flaky under load` | Keep these — they carry intent the code can't express |
+| Comments explaining "why" inside a function | `// Retry because the API is flaky under load` | Move the reason into the comment above the function, class or module. Write comments only there, never inside a function body |
 
 **Redundancy:**
 
