@@ -155,7 +155,9 @@
       "repo": "addyosmani/agent-skills",
       "path": "skills/code-simplification",
       "commit": "39b723ceebf81474d0557c1fecd01eddab585563",
-      "changes": []
+      "changes": [
+        "SKILL.md: a \"why\" comment inside a function is moved into the comment above the function, class or module, instead of kept in place."
+      ]
     },
     {
       "plugin": "workflow",
