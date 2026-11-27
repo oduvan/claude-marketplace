@@ -116,6 +116,27 @@
     },
     {
       "plugin": "workflow",
+      "skill": "brainstorming",
+      "repo": "obra/superpowers",
+      "path": "skills/brainstorming",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "changes": [
+        "SKILL.md: the two calls to superpowers:writing-plans now call workflow:writing-plans."
+      ]
+    },
+    {
+      "plugin": "workflow",
+      "skill": "writing-plans",
+      "repo": "obra/superpowers",
+      "path": "skills/writing-plans",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "changes": [
+        "SKILL.md: removed the line about the superpowers:using-git-worktrees skill, which is not in this marketplace.",
+        "SKILL.md: the plan header and the Execution Handoff no longer call superpowers:subagent-driven-development or superpowers:executing-plans, which are not in this marketplace. After the human partner approves the plan, the tasks are implemented in order in the same session."
+      ]
+    },
+    {
+      "plugin": "workflow",
       "skill": "tdd",
       "repo": "mattpocock/skills",
       "path": "skills/engineering/tdd",
